@@ -3,7 +3,9 @@ package com.wjh.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * 表头
+ */
 public class SheetHeader {
     /**
      * 例如 {姓名:name,性别:gender}
@@ -15,6 +17,7 @@ public class SheetHeader {
     private Map<String, String> englishKeyHeaderMap = new HashMap<>();
 
     /**
+     * 0、1表示第几列
      * {
      * 0 : {englishName : name, chineseName : 姓名},
      * 1 : {englishName : gender, chineseName : 性别}

@@ -13,8 +13,6 @@ public class SheetUtil {
      * 正常情况
      * sheet中有1行数据 return 1
      * sheet中有2行数据 return 2
-     *
-     * @param sheet
      */
     public static int totalRowCount(org.apache.poi.ss.usermodel.Sheet sheet) {
         if (sheet == null) return 0;
