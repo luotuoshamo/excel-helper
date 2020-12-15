@@ -38,6 +38,13 @@ public class SheetHeader {
     }
 
     /**
+     * 表头元素的个数
+     */
+    public int getHeaderItemCount() {
+        return indexKeyHeaderMap.keySet().size();
+    }
+
+    /**
      * 取第columnIndex列的中文名称
      */
     public String getChineseName(int columnIndex) {

@@ -16,13 +16,6 @@ public class ReadExcelTest {
         sheetHeader.add("性别", "gender");
         sheetHeader.add("身高", "height");
 
-        List list = ExcelUtil.parseSheetToMapList(
-                new FileInputStream("src/main/resources/test/test.xls"),
-                0,
-                sheetHeader
-        );
-        System.out.println("mapList=" + list);
-
         List<User> users = ExcelUtil.parseSheetToBeanList(
                 new FileInputStream("src/main/resources/test/test.xls"),
                 0,
@@ -41,13 +34,6 @@ public class ReadExcelTest {
         sheetHeader.add("性别", "gender", 1);
         sheetHeader.add("身高", "height", 2);
 
-        List list = ExcelUtil.parseSheetToMapList(
-                new FileInputStream("src/main/resources/test/test.xlsx"),
-                0,
-                sheetHeader
-        );
-        System.out.println("mapList="+list);
-
         List<User> users = ExcelUtil.parseSheetToBeanList(
                 new FileInputStream("src/main/resources/test/test.xlsx"),
                 0,
@@ -58,5 +44,4 @@ public class ReadExcelTest {
             System.out.println(user);
         }
     }
-
 }

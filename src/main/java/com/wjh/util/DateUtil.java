@@ -1,10 +1,8 @@
 package com.wjh.util;
 
-import javax.crypto.MacSpi;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 public class DateUtil {
     /**
@@ -19,30 +17,63 @@ public class DateUtil {
     private static SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DATE_TIME_MASK);
 
     /**
-     * s必须满足MASK
+     * @param s s必须满足MASK
      */
     public static Date stringToDate(String s) throws Exception {
+        if (s == null) return null;
         Type type = getType(s);
         if (type.equals(Type.DATE)) return dateFormat.parse(s);
         else if (type.equals(Type.TIME)) return timeFormat.parse(s);
-        else if (type.equals(Type.DATE_TIME)) return dateFormat.parse(s);
+        else if (type.equals(Type.DATE_TIME)) return dateTimeFormat.parse(s);
         throw new Exception("日期格式必须是【" + DATE_MASK + "】或【" + TIME_MASK + "】或【" + DATE_TIME_MASK + "】");
     }
 
+    public static String dateToString(Date d) throws Exception {
+        if (d == null) return null;
+        Type type = getType(d);
+        if (type.equals(Type.DATE)) return dateFormat.format(d);
+        else if (type.equals(Type.TIME)) return timeFormat.format(d);
+        else if (type.equals(Type.DATE_TIME)) return dateTimeFormat.format(d);
+        throw new Exception("日期格式必须是【" + DATE_MASK + "】或【" + TIME_MASK + "】或【" + DATE_TIME_MASK + "】");
+    }
+
+    /**
+     * 判断日期字符串的格式
+     * 判断顺序：dateTime=>date=>time
+     */
     private static Type getType(String s) {
         try {
-            dateFormat.parse(s);
-            return Type.DATE;
+            dateTimeFormat.parse(s);
+            return Type.DATE_TIME;
         } catch (ParseException e) {
             try {
-                timeFormat.parse(s);
-                return Type.TIME;
+                dateFormat.parse(s);
+                return Type.DATE;
             } catch (ParseException e1) {
                 try {
-                    dateTimeFormat.parse(s);
-                    return Type.DATE_TIME;
+                    timeFormat.parse(s);
+                    return Type.TIME;
                 } catch (ParseException e2) {
-                    return Type.UNKNOW;
+                    return Type.UNKNOWN;
+                }
+            }
+        }
+    }
+
+    private static Type getType(Date d) {
+        try {
+            dateTimeFormat.format(d);
+            return Type.DATE_TIME;
+        } catch (Exception e) {
+            try {
+                dateFormat.format(d);
+                return Type.DATE;
+            } catch (Exception e1) {
+                try {
+                    timeFormat.format(d);
+                    return Type.TIME;
+                } catch (Exception e2) {
+                    return Type.UNKNOWN;
                 }
             }
         }
@@ -52,9 +83,11 @@ public class DateUtil {
         String s = "2020-1-1 10:23:1";
         Date date = DateUtil.stringToDate(s);
         System.out.println(date);
+
+        System.out.println(DateUtil.dateToString(date));
     }
 
     enum Type {
-        DATE, TIME, DATE_TIME, UNKNOW
+        DATE, TIME, DATE_TIME, UNKNOWN
     }
 }

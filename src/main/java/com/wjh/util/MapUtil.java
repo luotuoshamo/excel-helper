@@ -4,6 +4,7 @@ import com.wjh.domain.User;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,8 +50,31 @@ public class MapUtil {
         return instance;
     }
 
+    /**
+     * 将实体类的对象转成Map<String,String>
+     */
+    public static <T> Map<String, String> beanToMap(T bean) throws Exception {
+        if (bean == null) throw new Exception("参数bean不可为空");
+        Map<String, String> map = new HashMap();
+        Class clazz = bean.getClass();
+        Field[] fields = clazz.getDeclaredFields();// 所有字段
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            String fieldType = field.getType().getTypeName();
+            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(fieldName, clazz);
+            Method readMethod = propertyDescriptor.getReadMethod();
+            Object fieldValue = readMethod.invoke(bean);
+            if (fieldType.equals(Date.class.getName())) {
+                map.put(fieldName, DateUtil.dateToString((Date) fieldValue));
+            } else {
+                map.put(fieldName, String.valueOf(fieldValue));
+            }
+        }
+        return map;
+    }
+
     public static void main(String[] args) throws Exception {
-        HashMap<String, String> map = new HashMap<>();
+      /*  HashMap<String, String> map = new HashMap<>();
         map.put("name", "wjh");
         map.put("gender", "男");
         map.put("height", "100");
@@ -59,6 +83,17 @@ public class MapUtil {
         map.put("birthday", "1999-1-11");
 
         User user = mapToBean(map, User.class);
-        System.out.println(user);
+        System.out.println(user);*/
+
+        User user = new User();
+        user.setName("ww");
+        user.setGender("男");
+        user.setVip(false);
+        user.setBirthday(new Date());
+        user.setHeight(101.0F);
+        Map<String, String> map = beanToMap(user);
+        System.out.println(map);
     }
+
+
 }
