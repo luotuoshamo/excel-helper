@@ -34,6 +34,7 @@ public class WriteExcelTest {
 
         Workbook workbook = ExcelUtil.createExcel(ExcelTypeEnum.XLSX);
         ExcelUtil.addSheet(workbook, "shhet1", sheetHeader, maps);
+        ExcelUtil.addSheet(workbook, "shhet2", sheetHeader, maps);
         workbook.write(new FileOutputStream("D:/tmp/t2.xlsx"));
     }
 }

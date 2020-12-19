@@ -36,6 +36,7 @@ public class ExcelUtil {
                 .parseSheetToBeanList(excelInputStream, sheetIndex, sheetHeader, clazz);
     }
 
+
     /**
      * 获取excel的类型
      */
@@ -63,9 +64,13 @@ public class ExcelUtil {
 
 
     /**
-     * 创建sheet
+     * 给excel（workbook）创建sheet
      */
-    public static Workbook addSheet(Workbook workbook, String sheetName, SheetHeader sheetHeader, List<Map<String, String>> dataMaps) throws Exception {
+    public static Workbook addSheet(
+            Workbook workbook,
+            String sheetName,
+            SheetHeader sheetHeader,
+            List<Map<String, String>> dataMaps) {
         Sheet sheet = workbook.createSheet(sheetName);
 
         // 表头
