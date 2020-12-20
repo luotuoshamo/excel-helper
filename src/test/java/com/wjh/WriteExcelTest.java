@@ -1,12 +1,9 @@
 package com.wjh;
 
 import com.wjh.domain.SheetHeader;
+import com.wjh.domain.User;
 import com.wjh.enums.ExcelTypeEnum;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
 import java.io.FileOutputStream;
@@ -14,27 +11,28 @@ import java.util.*;
 
 public class WriteExcelTest {
     @Test
-    public void f() throws Exception {
+    public void testWriteExcel() throws Exception {
         SheetHeader sheetHeader = new SheetHeader();
         sheetHeader.add("姓名", "name");
         sheetHeader.add("性别", "gender");
 
-        List<Map<String, String>> maps = new ArrayList<>();
-        Map<String, String> map1 = new HashMap();
-        Map<String, String> map2 = new HashMap();
+        User user1= new User();
+        user1.setName("王jh");
+        user1.setGender("m");
+        user1.setBirthday(new Date());
 
-        map1.put("name", "wwjh");
-        map1.put("gender", "男");
+        User user2 = new User();
+        user2.setName("张boss");
 
-        map2.put("name", "jik");
-        map2.put("gender", "女");
 
-        maps.add(map1);
-        maps.add(map2);
+        List<User> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
 
         Workbook workbook = ExcelUtil.createExcel(ExcelTypeEnum.XLSX);
-        ExcelUtil.addSheet(workbook, "shhet1", sheetHeader, maps);
-        ExcelUtil.addSheet(workbook, "shhet2", sheetHeader, maps);
+        ExcelUtil.addSheet(workbook,"sht1",sheetHeader,users);
+        ExcelUtil.addSheet(workbook,"sht2",sheetHeader,users);
+
         workbook.write(new FileOutputStream("D:/tmp/t2.xlsx"));
     }
 }

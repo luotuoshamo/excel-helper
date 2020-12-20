@@ -2,11 +2,11 @@ package com.wjh;
 
 import org.junit.Test;
 
-import java.io.File;
+import javax.jws.Oneway;
 import java.util.HashMap;
 import java.util.Map;
 
-public class T {
+public class TmpTest {
     @Test
     public void t() {
         Map m = new HashMap();
@@ -21,14 +21,10 @@ public class T {
     }
 
     @Test
-    public void testFileExist() {
-        File xlsFile = new File("test.xls");
-        System.out.println(xlsFile.exists());// true
-
-        File xlsFile2 = new File("test2.xls");
-        System.out.println(xlsFile2.exists());// false
-
-        File txtFile = new File("test.txt");
-        System.out.println(txtFile.exists());// false
+    public void f(){
+        Map<String , String> map = new HashMap<>();
+        Object o = null;
+        map.put("s",String.valueOf(o));
+        System.out.println(map);
     }
 }

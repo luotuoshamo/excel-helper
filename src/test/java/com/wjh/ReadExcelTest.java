@@ -22,10 +22,10 @@ public class ReadExcelTest {
                 sheetHeader,
                 User.class
         );
-        for (User user : users) {
+        for (User user : users)
             System.out.println(user);
-        }
     }
+
 
     @Test
     public void testReadXlsx() throws Exception {
@@ -40,8 +40,7 @@ public class ReadExcelTest {
                 sheetHeader,
                 User.class
         );
-        for (User user : users) {
+        for (User user : users)
             System.out.println(user);
-        }
     }
 }

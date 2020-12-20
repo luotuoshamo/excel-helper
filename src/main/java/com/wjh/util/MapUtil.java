@@ -67,6 +67,7 @@ public class MapUtil {
             if (fieldType.equals(Date.class.getName())) {
                 map.put(fieldName, DateUtil.dateToString((Date) fieldValue));
             } else {
+                if (fieldValue == null) fieldValue = "";
                 map.put(fieldName, String.valueOf(fieldValue));
             }
         }
@@ -90,10 +91,8 @@ public class MapUtil {
         user.setGender("男");
         user.setVip(false);
         user.setBirthday(new Date());
-        user.setHeight(101.0F);
+        //user.setHeight(101.0F);
         Map<String, String> map = beanToMap(user);
         System.out.println(map);
     }
-
-
 }
