@@ -1,7 +1,5 @@
 package com.wjh.util;
 
-import com.wjh.domain.User;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -41,10 +39,6 @@ public class MapUtil {
                 propertyDescriptor.getWriteMethod().invoke(instance, Boolean.parseBoolean(fieldValue));
             } else if (fieldType.equals(Date.class.getName())) {
                 propertyDescriptor.getWriteMethod().invoke(instance, DateUtil.stringToDate(fieldValue));
-            } else {
-                throw new Exception("fieldType是【" + fieldType
-                        + "】目前还不支持，可将详情发至邮箱："
-                        + Constant.MY_EMAIL);
             }
         }
         return instance;
@@ -72,27 +66,5 @@ public class MapUtil {
             }
         }
         return map;
-    }
-
-    public static void main(String[] args) throws Exception {
-      /*  HashMap<String, String> map = new HashMap<>();
-        map.put("name", "wjh");
-        map.put("gender", "男");
-        map.put("height", "100");
-        map.put("pay", "50000");
-        //map.put("vip", "null");
-        map.put("birthday", "1999-1-11");
-
-        User user = mapToBean(map, User.class);
-        System.out.println(user);*/
-
-        User user = new User();
-        user.setName("ww");
-        user.setGender("男");
-        user.setVip(false);
-        user.setBirthday(new Date());
-        //user.setHeight(101.0F);
-        Map<String, String> map = beanToMap(user);
-        System.out.println(map);
     }
 }
