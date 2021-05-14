@@ -6,18 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 public class MySheet {
-    private List<String> headList;// 从做往右
+    private String name;
+    private List<String> headList;// 按sheet中的顺序从左往右
     private List<List<String>> dataList;
     private List<Map<String, String>> dataMapList;
 
     public MySheet(List<List<String>> rowList) {
-        if (rowList == null || rowList.size() == 0) return;
-        headList = rowList.get(0);
-        dataList = rowList.subList(1, rowList.size());
-        if (headList == null) headList = new ArrayList();
-        if (dataList == null) dataList = new ArrayList();
+        this(rowList.get(0), rowList.subList(1, rowList.size()));
+    }
 
+    public MySheet(List<String> headList, List<List<String>> dataList) {
+        this.headList = headList == null ? new ArrayList() : headList;
+        this.dataList = dataList == null ? new ArrayList() : dataList;
         dataMapList = createDataMapList();
+    }
+
+    public MySheet(String name, List<String> headList, List<List<String>> dataList) {
+        this(headList, dataList);
+        setName(name);
     }
 
     private List<Map<String, String>> createDataMapList() {
@@ -31,6 +37,22 @@ public class MySheet {
             mapList.add(map);
         }
         return mapList;
+    }
+
+    public List<String> getHeadList() {
+        return headList;
+    }
+
+    public List<List<String>> getDataList() {
+        return dataList;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

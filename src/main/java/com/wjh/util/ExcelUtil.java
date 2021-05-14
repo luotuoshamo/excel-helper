@@ -1,21 +1,37 @@
 package com.wjh.util;
 
-import org.apache.poi.ss.usermodel.*;
+import com.wjh.enums.ExcelTypeEnum;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelUtil {
     /**
      * 获取从excel中获取sheet
-     * HSSF 提供读写Microsoft Excel XLS格式档案的功能
-     * XSSF 提供读写Microsoft Excel OOXML XLSX格式档案的功能
+     * HSSF   .xls
+     * XSSF    xlsx
      * <p>
      * org.apache.poi.ss.usermodel.*
      */
     public static Sheet sheetAt(File excelFile, int index) throws Exception {
-        Workbook excel = WorkbookFactory.create(excelFile);
+        if (excelFile == null) throw new Exception("excelFile不可为空");
+        FileInputStream fis = new FileInputStream(excelFile);
+
+        ExcelTypeEnum excelType = getExcelType(excelFile);
+        if (excelType.equals(ExcelTypeEnum.XLS)) {
+            HSSFWorkbook excel = new HSSFWorkbook(fis);
+            return excel.getSheetAt(index);
+        }
+
+        XSSFWorkbook excel = new XSSFWorkbook(fis);
         return excel.getSheetAt(index);
     }
 
@@ -38,23 +54,33 @@ public class ExcelUtil {
      * 将row转成List<String>
      */
     public static List<String> rowToStringList(Row row) {
-        int cellCount = getRowCellCount(row);
+        int cellCount = getRowCellCount(row);// 该row有个cell
         if (cellCount == 0) return null;
 
-        List<String> list = new ArrayList();
+        List<String> cellValueList = new ArrayList();
         for (int i = 0; i < cellCount; i++) {
-            String cellValue = getCellValueAsString(row.getCell(i));
-            list.add(cellValue);
+            Cell cell = row.getCell(i);
+            String cellValue = getCellValueAsString(cell);
+            cellValueList.add(cellValue);
         }
-        return list;
+        return cellValueList;
     }
 
     /**
      * 忽略单元格中内容的类型，全当作string
      */
     public static String getCellValueAsString(Cell cell) {
-        DataFormatter df = new DataFormatter();
-        String cellValue = df.formatCellValue(cell);
-        return cellValue;
+        return new DataFormatter().formatCellValue(cell);
     }
+
+    public static ExcelTypeEnum getExcelType(File excelFile) throws Exception {
+        if (excelFile == null) throw new Exception("excelFile不可为空");
+        String excelFileName = excelFile.getName().toLowerCase();
+        ExcelTypeEnum excelType;
+        if (excelFileName.endsWith(".xls")) excelType = ExcelTypeEnum.XLS;
+        else if (excelFileName.endsWith(".xlsx")) excelType = ExcelTypeEnum.XLSX;
+        else throw new Exception("【" + excelFile.getName() + "】不是excel");
+        return excelType;
+    }
+
 }

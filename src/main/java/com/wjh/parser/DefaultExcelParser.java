@@ -1,4 +1,4 @@
-package com.wjh.reader;
+package com.wjh.parser;
 
 
 import com.wjh.entity.MySheet;
@@ -10,9 +10,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultExcelReader implements ExcelReader {
-    @Override
-    public MySheet readSheet(File excelFile, int sheetIndex) throws Exception {
+public class DefaultExcelParser implements ExcelParser {
+
+    public MySheet parse(File excelFile, int sheetIndex) throws Exception {
         Sheet sheet = ExcelUtil.sheetAt(excelFile, sheetIndex);
         int sheetRowCount = ExcelUtil.getSheetRowCount(sheet);
         // sheet中无数据，或只有表头
