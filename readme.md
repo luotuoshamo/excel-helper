@@ -5,8 +5,15 @@
 # 概述
 
 * 该工具用于解析和创建excel（xls、xlsx）
+
 * 该项目只依赖Apache POI 4.1.2和JDK 8
+
 * POI官方文档 `http://poi.apache.org/components/spreadsheet/index.html`
+
+# 使用
+1. `git clone https://github.com/luotuoshamo/excel-helper.git`
+2. `mvn package`
+3. 生成的jar在这里 `excel-helper\target\excel-helper-1.0.0.jar`
 
 # API
 
