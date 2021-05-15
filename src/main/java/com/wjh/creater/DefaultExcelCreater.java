@@ -15,8 +15,36 @@ import java.util.List;
 public class DefaultExcelCreater implements ExcelCreater {
     public Workbook create(ExcelTypeEnum excelType, MySheet mySheet) throws Exception {
         if (mySheet == null) throw new Exception("mySheet不可为null");
+        Workbook excel = createExcel(excelType);
+        addSheetToExcel(excel, mySheet);
+        return excel;
+    }
 
-        Workbook excel = ExcelTypeEnum.XLS.equals(excelType) ? new HSSFWorkbook() : new XSSFWorkbook();
+
+    @Override
+    public Workbook create(MySheet mySheet) throws Exception {
+        return create(ExcelTypeEnum.XLSX, mySheet);
+    }
+
+    @Override
+    public Workbook create(ExcelTypeEnum excelType, List<MySheet> mySheetList) throws Exception {
+        Workbook excel = createExcel(excelType);
+        for (MySheet mySheet : mySheetList) {
+            addSheetToExcel(excel, mySheet);
+        }
+        return excel;
+    }
+
+    public Workbook create(List<MySheet> mySheetList) throws Exception {
+        return create(ExcelTypeEnum.XLSX, mySheetList);
+    }
+
+
+    private Workbook createExcel(ExcelTypeEnum excelType) {
+        return ExcelTypeEnum.XLS.equals(excelType) ? new HSSFWorkbook() : new XSSFWorkbook();
+    }
+
+    private void addSheetToExcel(Workbook excel, MySheet mySheet) throws Exception {
         String name = mySheet.getName();
         Sheet sheet = name == null ? excel.createSheet() : excel.createSheet(name);
 
@@ -35,22 +63,5 @@ public class DefaultExcelCreater implements ExcelCreater {
                 cell.setCellValue(cellValue);
             }
         }
-        return excel;
-    }
-
-
-    @Override
-    public Workbook create(MySheet mySheet) throws Exception {
-        return create(ExcelTypeEnum.XLSX, mySheet);
-    }
-
-    @Override
-    public Workbook create(ExcelTypeEnum excelTypeEnum, List<MySheet> mySheetList) {
-
-        return null;
-    }
-
-    public Workbook create(List<MySheet> mySheetList) {
-        return null;
     }
 }
