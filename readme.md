@@ -4,7 +4,7 @@
 
 # 概述
 
-* 该工具用于解析和创建excel（xls、xlsx）
+* 该项目用于解析和创建excel（xls、xlsx）
 
 * 该项目只依赖Apache POI 4.1.2和JDK 8
 
