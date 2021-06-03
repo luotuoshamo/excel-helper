@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,18 +22,31 @@ public class ExcelUtil {
      * <p>
      * org.apache.poi.ss.usermodel.*
      */
-    public static Sheet sheetAt(File excelFile, int index) throws Exception {
-        if (excelFile == null) throw new Exception("excelFile不可为空");
-        FileInputStream fis = new FileInputStream(excelFile);
+    public static Sheet sheetAt(InputStream excelIs, ExcelTypeEnum excelType, int index) throws Exception {
+        if (excelIs == null) throw new Exception("excelIs为空");
+        if (excelType == null) throw new Exception("excelType为空");
 
-        ExcelTypeEnum excelType = getExcelType(excelFile);
         if (excelType.equals(ExcelTypeEnum.XLS)) {
-            HSSFWorkbook excel = new HSSFWorkbook(fis);
+            HSSFWorkbook excel = new HSSFWorkbook(excelIs);
             return excel.getSheetAt(index);
         }
 
-        XSSFWorkbook excel = new XSSFWorkbook(fis);
+        XSSFWorkbook excel = new XSSFWorkbook(excelIs);
         return excel.getSheetAt(index);
+    }
+
+    /**
+     * 获取从excel中获取sheet
+     * HSSF   .xls
+     * XSSF    xlsx
+     * <p>
+     * org.apache.poi.ss.usermodel.*
+     */
+    public static Sheet sheetAt(File excelFile, int index) throws Exception {
+        if (excelFile == null) throw new Exception("excelFile不可为空");
+        FileInputStream fis = new FileInputStream(excelFile);
+        ExcelTypeEnum excelType = getExcelType(excelFile);
+        return sheetAt(fis, excelType, index);
     }
 
     /**
@@ -73,6 +87,9 @@ public class ExcelUtil {
         return new DataFormatter().formatCellValue(cell);
     }
 
+    /**
+     * 获取excel的类型
+     */
     public static ExcelTypeEnum getExcelType(File excelFile) throws Exception {
         if (excelFile == null) throw new Exception("excelFile不可为空");
         String excelFileName = excelFile.getName().toLowerCase();

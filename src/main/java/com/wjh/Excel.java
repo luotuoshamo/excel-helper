@@ -10,6 +10,7 @@ import com.wjh.parser.ExcelParser;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -20,11 +21,14 @@ public class Excel {
     }
 
     private static ExcelParser excelParser = new DefaultExcelParser();
-    private static ExcelCreater excelCreater = new DefaultExcelCreater() {
-    };
+    private static ExcelCreater excelCreater = new DefaultExcelCreater();
 
     public static MySheet parse(File excelFile, int sheetIndex) throws Exception {
         return excelParser.parse(excelFile, sheetIndex);
+    }
+
+    public static MySheet parse(InputStream excelIs, ExcelTypeEnum excelType, int sheetIndex) throws Exception {
+        return excelParser.parse(excelIs, excelType, sheetIndex);
     }
 
     public static Workbook create(MySheet mySheet) throws Exception {

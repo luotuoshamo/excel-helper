@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,12 @@ public class ExcelTest {
         System.out.println(mySheet);
     }
 
+    @Test
+    public void parse2() throws Exception {
+        File excelFile = new File("src\\main\\resources\\tmp\\1.xls");
+        MySheet mySheet = Excel.parse(new FileInputStream(excelFile), ExcelTypeEnum.XLS, 0);
+        System.out.println(mySheet);
+    }
 
     /**
      * 创建有2个sheet的xls
