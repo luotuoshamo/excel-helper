@@ -11,8 +11,8 @@ public class MySheet {
     private List<List<String>> dataList;
     private List<Map<String, String>> dataMapList;
 
-    public MySheet(List<List<String>> rowList) {
-        this(rowList.get(0), rowList.subList(1, rowList.size()));
+    public MySheet(List<List<String>> dataList) {
+        this(dataList.get(0), dataList.subList(1, dataList.size()));
     }
 
     public MySheet(List<String> headList, List<List<String>> dataList) {
@@ -45,6 +45,10 @@ public class MySheet {
 
     public List<List<String>> getDataList() {
         return dataList;
+    }
+
+    public List<Map<String, String>> getDataMapList() {
+        return dataMapList;
     }
 
     public void setName(String name) {
