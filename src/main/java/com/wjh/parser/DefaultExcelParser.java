@@ -1,40 +1,51 @@
 package com.wjh.parser;
 
-
+import com.wjh.entity.MyExcel;
 import com.wjh.entity.MySheet;
 import com.wjh.enums.ExcelTypeEnum;
-import com.wjh.util.ExcelUtil;
+import com.wjh.util.RowUtil;
+import com.wjh.util.SheetUtil;
+import com.wjh.util.WorkbookUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultExcelParser implements ExcelParser {
-    @Override
-    public MySheet parse(File excelFile, int sheetIndex) throws Exception {
-        ExcelTypeEnum excelType = ExcelUtil.getExcelType(excelFile);
-        return parse(new FileInputStream(excelFile), excelType, sheetIndex);
+    private Workbook workbook;
+
+    public DefaultExcelParser(InputStream excelIs, ExcelTypeEnum excelType) throws IOException {
+        this.workbook = WorkbookUtil.initWorkbook(excelIs, excelType);
+        if (this.workbook == null) throw new RuntimeException("workbook初始化失败");
     }
 
     @Override
-    public MySheet parse(InputStream excelIs, ExcelTypeEnum excelType, int sheetIndex) throws Exception {
-        Sheet sheet = ExcelUtil.sheetAt(excelIs, excelType, sheetIndex);
-        int sheetRowCount = ExcelUtil.getSheetRowCount(sheet);
-        // sheet中无数据，或只有表头
-        if (sheetRowCount == 0 || sheetRowCount == 1) return null;
-
-        List<List<String>> rowList = new ArrayList();
-        for (int i = 0; i < sheetRowCount; i++) {
-            Row row = sheet.getRow(i);
-            List<String> cellValueList = ExcelUtil.rowToStringList(row);
-            rowList.add(cellValueList);
+    public MyExcel parse() throws IOException {
+        MyExcel myExcel = new MyExcel();
+        int totalSheetCount = WorkbookUtil.totalSheetCount(workbook);
+        for (int idx = 0; idx < totalSheetCount; idx++) {
+            Sheet sheet = WorkbookUtil.sheetAt(workbook, idx);
+            int sheetRowCount = SheetUtil.getSheetRowCount(sheet);
+            // sheet是空白
+            if (sheetRowCount == 0) {
+                myExcel.getMySheets().add(null);
+                continue;
+            }
+            // 解析sheet
+            List<List<String>> rowList = new ArrayList(sheetRowCount);
+            for (int i = 0; i < sheetRowCount; i++) {
+                Row row = sheet.getRow(i);
+                List<String> rowCellList = RowUtil.rowToStringList(row);
+                rowList.add(rowCellList);
+            }
+            MySheet mySheet = new MySheet(sheet.getSheetName(), rowList);
+            myExcel.getMySheets().add(mySheet);
         }
 
-        MySheet mySheet = new MySheet(rowList);
-        return mySheet;
+        return myExcel;
     }
 }
