@@ -6,7 +6,7 @@
 
     <groupId>com.wjh</groupId>
     <artifactId>jexcel</artifactId>
-    <version>2.0.0</version>
+    <version>1.0.0</version>
     <description>Java解析和创建excel</description>
 
     <distributionManagement>
