@@ -19,7 +19,7 @@ xls是老版excel（excel87-2003）,xlsx是新版excel（excel2007+）
 
 * 在pom.xml中加入：
 
-```
+```xml
 <repositories>
     <repository>
         <id>jexcel</id>
@@ -37,6 +37,8 @@ xls是老版excel（excel87-2003）,xlsx是新版excel（excel2007+）
 ```
 
 > 加入上面的配置后`mvn install`一下；如果还是爆红需要重启IDEA
+>
+> 如果`mvn install`失败过，请删掉本地maven仓库中安装失败的项目，在执行`mvn install`
 
 * 示例-解析excel
 
