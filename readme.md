@@ -47,10 +47,9 @@ xls是老版excel（excel87-2003）,xlsx是新版excel（excel2007+）
       File xlsFile = new File("src/test/resources/1.xls")
           MyExcel me = ExcelUtil.parse(xlsFile);
       System.out.println(me.getMySheets());
-      Assert.assertEquals(3, me.getMySheets().size());
   }
   ```
-
+  
 * 示例-创建excel
 
   ```java
