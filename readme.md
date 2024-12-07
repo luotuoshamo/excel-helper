@@ -1,46 +1,17 @@
+Jexcel is a framework for parsing and creating the excel, which based on Apache POI.
+Xls is the older formater of excel (excel87-2003), however xlsx is the new version (excel2007+).
 
 
-
-
-# 介绍
-
-jexcel用于解析和创建excel（包括xls和xlsx），基于Apache POI 4.1.2（`https://poi.apache.org/`），JDK基于1.8。操作excel时比较复杂的是处理各种数据类型，可以将所有数据都用String类型处理。
-
-xls是老版excel（excel87-2003）,xlsx是新版excel（excel2007+）
-
-# 依赖
-
-| 依赖       | 版本  | Maven自动下载,使用使无需手动添加 |
-| ---------- | ----- | -------------------------------- |
-| JDK        | 1.8   | N                                |
-| Apache POI | 4.1.2 | Y                                |
-
-# 使用
-
-* 在pom.xml中加入：
-
+# Examples
 ```xml
-<repositories>
-    <repository>
-        <id>jexcel</id>
-        <name>GitHub OWNER Apache Maven Packages</name>
-        <url>https://topicstudy.github.io/jexcel/maven-repo/</url>
-    </repository>
-</repositories>
-<dependencies>
-    <dependency>
-        <groupId>com.wjh</groupId>
-        <artifactId>jexcel</artifactId>
-        <version>1.0.0</version>
-    </dependency>
-</dependencies>
+  <dependency>
+  <groupId>io.github.topicstudy</groupId>
+  <artifactId>jexcel</artifactId>
+  <version>RELEASE</version>
+</dependency>
 ```
 
-> 加入上面的配置后`mvn install`一下；如果还是爆红需要重启IDEA
->
-> 如果`mvn install`失败过，请删掉本地maven仓库中安装失败的项目，在执行`mvn install`
-
-* 示例-解析excel
+## Example of parse an excel.
 
   ```java
   public void testParse() throws IOException {
@@ -49,8 +20,7 @@ xls是老版excel（excel87-2003）,xlsx是新版excel（excel2007+）
       System.out.println(me.getMySheets());
   }
   ```
-  
-* 示例-创建excel
+## Example of create an excel.
 
   ```java
    public void testCreate() throws IOException {
@@ -79,12 +49,5 @@ xls是老版excel（excel87-2003）,xlsx是新版excel（excel2007+）
           if (fos != null) fos.close();
       }
   ```
-
-  # 联系我
-
-  | 微信   | topicstudy                    |
-  | ------ | ----------------------------- |
-  | Gitee  | https://gitee.com/topicstudy  |
-  | Github | https://github.com/topicstudy |
 
   
