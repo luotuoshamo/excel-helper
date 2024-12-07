@@ -11,7 +11,7 @@ Xls is the older formater of excel (excel87-2003), however xlsx is the new versi
 </dependency>
 ```
 
-## Example of parse an excel.
+## Example of parsing an excel.
 
   ```java
   public void testParse() throws IOException {
@@ -20,7 +20,7 @@ Xls is the older formater of excel (excel87-2003), however xlsx is the new versi
       System.out.println(me.getMySheets());
   }
   ```
-## Example of create an excel.
+## Example of creating an excel.
 
   ```java
    public void testCreate() throws IOException {
