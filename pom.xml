@@ -10,7 +10,7 @@
     <version>1.0.3</version>
     <name>io.github.topicstudy:jexcel</name>
     <packaging>jar</packaging>
-    <description>send Email by Java</description>
+    <description>Parse and create excel.</description>
     <url>http://github.com/topicstudy/jexcel</url>
 
     <organization>
