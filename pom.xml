@@ -7,7 +7,7 @@
     <!--project meta info, required by sonatype-->
     <groupId>io.github.topicstudy</groupId>
     <artifactId>jexcel</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <name>io.github.topicstudy:jexcel</name>
     <packaging>jar</packaging>
     <description>Parse and create excel.</description>
